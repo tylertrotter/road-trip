@@ -14,5 +14,11 @@ export default {
 </script>
 
 <style>
+  body {
+    margin: 0;
+  }
 
+  [id="app"] {
+  height: 100vh;
+}
 </style>
