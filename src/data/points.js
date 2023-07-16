@@ -1,8 +1,9 @@
 const points = [
   {
-    name: 'Columbia, SC',
+    id: 'columbia-sc',
+    name: 'Columbia',
     state: 'SC',
-    location: [754.6, 374.1],
+    location: [659.27, 378.37],
     population: 139698,
     capital: true,
     precipitation: -1,
@@ -37,8 +38,10 @@ const points = [
     population: 897720
   },
   {
-    name: 'Raleigh, NC',
-    location: [800, 330],
+    id: 'raleigh-nc',
+    name: 'Raleigh',
+    state: 'NC',
+    location: [690, 340],
     population: 476587,
     capital: true,
     precipitation: -1,
@@ -166,7 +169,23 @@ const points = [
     rivers: [],
     latlong: [42.8962,-78.9468],
     proTeams: []
-  }
+  },
+
+  // IL
+  {
+    name: 'Chicago',
+    state: 'IL',
+    location: [551.28,252.85],
+    population: 276486,
+    precipitation: -1,
+    greatLake: '',
+    coast: null,
+    type: 'city',
+    elevation: -1,
+    rivers: [],
+    latlong: [42.8962,-78.9468],
+    proTeams: []
+  },
 ];
 
 export { points as default };

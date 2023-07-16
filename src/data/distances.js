@@ -2,7 +2,7 @@ const distances = [
 
   // Columbia, SC
   {
-    points: ['Columbia, SC', 'Charlotte, NC'], 
+    points: ['columbia-sc', 'charlotte-nc'], 
     distance: 1.5
   },
   {
@@ -22,7 +22,7 @@ const distances = [
     distance: 2.75
   },
   {
-    points: ['Columbia, SC', 'Raleigh, NC'], 
+    points: ['columbia-sc', 'raleigh-nc'], 
     distance: 3.25
   },
   {
