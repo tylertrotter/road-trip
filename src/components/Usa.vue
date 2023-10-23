@@ -1,6 +1,5 @@
 <template>
-  <div id="map" class="map-container">
-
+  <div class="map-container">
     <svg id="map" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 887.1 638.4">
 
       <static-map />
@@ -10,21 +9,18 @@
           v-for="point in points" 
           :key="point.name" 
           @click="handlePointClick(point.name)"
-        >
+          >
           <circle 
-            class="city"
-            :class="[{'active': currentPoint.name === point.name}, 'city--' + (point.population > 500000 ? 'l' : point.population > 200000 ? 'm' : 's')]" 
-            :cx="point.location[0]" 
-            :cy="point.location[1]"
-          />
-          <circle
-            class="touch"
-            :cx="point.location[0]" 
-            :cy="point.location[1]"
+            v-if="point.x && point.y"
+            class="point"
+            :class="[{'active': currentPoint.name === point.name}, 'point--' + (point.population > 500000 ? 'l' : point.population > 200000 ? 'm' : 's')]" 
+            :cx="point.x" 
+            :cy="point.y"
           />
           <text
-            :x="point.location[0] - 3" 
-            :y="point.location[1] + 1"
+            v-if="point.x && point.y"
+            :x="point.x - 3" 
+            :y="point.y + 1"
             text-anchor="end"
           >{{ point.name }}</text>
         </g>
@@ -56,7 +52,7 @@
     </svg>
   </div>
 
-  <div class="info">
+  <!-- <div class="info">
     <h3>Current Location: {{ currentPoint.name }}</h3> 
     <div v-if="consideredPoint">
       Proposed drive to: {{ consideredPoint.name }}
@@ -90,7 +86,7 @@
         <li v-for="(listItem, i) in goal.checklist" :key="i" :class="{'done': listItem.done}">{{ listItem.text }}</li>
       </ul>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -127,8 +123,8 @@ export default {
 
     const mapContainer = document.getElementById('map')
     const panzoom = Panzoom(mapContainer, {
-      maxScale: 8,
-			minScale: 1,
+      maxScale: 12, // 8 for desktop, 12 for mobile
+			minScale: 1.2,
       step: 1.5,
       panOnlyWhenZoomed: true,
       contain: 'outside',
@@ -194,49 +190,35 @@ export default {
 }
 </script>
 
-<style>
-.city {
+<style lang="scss">
+.point {
   fill: black;
-  stroke: white;
-}
-.city--l {
-  r: 3;
-}
-.city--m {
-  r: 2;
-  stroke-width: .75;
+  stroke: transparent;
+  stroke-width: 7;
+  transform-origin: center;
+  transform-box: fill-box;
+  transition: .3s transform;
 }
 
-.city--s {
-  r: 1;
-  stroke-width: .5;
+.point:hover {
+  transform: scale(1.1);
 }
 
-.city:hover {
-  stroke: yellow;
-  stroke-width: 1;
+.point--l {
+  r: 3px;
+}
+.point--m {
+  r: 2px;
 }
 
-.city.active {
-  stroke: red;
-  stroke-width: 1;
-}
-
-.touch {
-  r: 7;
-  opacity: 0;
+.point--s {
+  r: 1px;
 }
 
 svg {
   width: 100%;
   height: 100%;
-  /* height: vh; */
 }
-/* path {
-  fill: rgb(200, 200, 200);
-  stroke: white;
-  stroke-width: .5;
-} */
 
 line {
   stroke-linecap: round;
@@ -248,8 +230,11 @@ line {
 .map-container {
   width: 100%;
   height: 100vh;
-  margin: 0 auto;
+  background: var(--water);
 
+  @media (orientation: portrait) {
+    height: 75vh;
+  }
 }
 
 .info,
@@ -277,25 +262,21 @@ line {
 
 
 svg text {
-        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        font-size: 2.5px;
-        fill: black;
-        opacity: 0;
-        transition: opacity .2s;
-      }
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 2.5px;
+    fill: black;
+    opacity: 0;
+    transition: opacity .2s;
+  }
 
-      [id^='touch'] {
-        opacity: 0;
-      }
-
-      [id^='dot'] {
-        fill: black;
-      }
-
-      [style*="scale(5"].map-container text,
-      [style*="scale(6"].map-container text,
-      [style*="scale(7"].map-container text,
-      [style*="scale(8"].map-container text {
-        opacity: 1;
-      }
+  svg[style*="scale(5"] text,
+  svg[style*="scale(6"] text,
+  svg[style*="scale(7"] text,
+  svg[style*="scale(8"] text,
+  svg[style*="scale(9"] text,
+  svg[style*="scale(10"] text,
+  svg[style*="scale(11"] text,
+  svg[style*="scale(12"] text {
+    opacity: 1;
+  }
 </style>

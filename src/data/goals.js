@@ -21,7 +21,7 @@ const goals = [
       },
       {
         text: 'A spot on a Great Lake',
-        condition: point => point.greatLake 
+        condition: point => point.lakes.includes('Huron') || point.lakes.includes('Superior') 
       }
     ]
   }
